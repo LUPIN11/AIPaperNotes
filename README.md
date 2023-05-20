@@ -1,10 +1,12 @@
-# U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)
+# WeeklyAIPaperNotes
+
+## U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)
 
 Paper Download Link:
 
 > https://arxiv.org/abs/1505.04597
 
-## Overview
+### Overview
 
 This paper presents a new network architecture, U-Net, of fully convolutional network(FCN) and its training strategy to solve a pixel-level classification task with very few annotated images.
 
@@ -14,7 +16,7 @@ Key Points:
 + Network architecture: a contracting path and a expanding path that has concatenations with the correspondingly cropped feature map from the contracting path
 + A weighted loss: weigthed cross entropy loss on each pixels, and the weight is determind by sample balancing and the distance to the border cells
 
-## Network Architecture
+### Network Architecture
 
 <img src=".\images\image-20230520145130450.png" alt="image-20230520145130450" style="zoom:67%;" />
 
@@ -38,7 +40,7 @@ Main Ideas:
 
   Generally, we double(halve) the number of feature channels after a 2x2 max-pooling(up-convolution) operation to stabilize the number of features. However, we noticed that the number of channels remains unchanged before and after the up-convolution operation. 
 
-## Data Augmentation
+### Data Augmentation
 
 <img src=".\images\image-20230520171749916.png" alt="image-20230520171749916" style="zoom:50%;" />
 
@@ -54,7 +56,7 @@ Main Ideas:
 
   It's the most common variation of the task in reality and there is very little training data available.
 
-## Loss Fuction
+### Loss Fuction
 
 <img src=".\images\image-20230520174104573.png" alt="image-20230520174104573" style="zoom:67%;" />
 
