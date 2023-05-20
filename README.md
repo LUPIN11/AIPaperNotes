@@ -1,6 +1,6 @@
 # WeeklyAIPaperNotes
 
-[hi](#hi)
+[U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)](##u-net--convolutional-networks-for-biomedical-image-segmentation-2023-5-20)
 
 ## U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)
 
@@ -64,7 +64,6 @@ Main Ideas:
 
 Due to the challenge of separating touching objects of the same class, a weighted loss is used to force the network to learn the small separation borders.  
 
-### hi
 
 
 
