@@ -39,39 +39,30 @@ class U_Net(nn.Module):
         self.outconv = nn.Conv2d(64, n_classes, 1)
 
     def forward(self, x):
-        #         # contracting path
-        #         x0 = self.conv0(x)
-        #         x1 = self.conv1(self.maxpool(x0))
-        #         x2 = self.conv2(self.maxpool(x1))
-        #         x3 = self.conv3(self.maxpool(x2))
-        #         x = self.conv4(self.maxpool(x3))
-        #         # expanding path
-        #         x = self.conv5(self.concat(self.convT0(x), x3))
-        #         x = self.conv6(self.concat(self.convT1(x), x2))
-        #         x = self.conv7(self.concat(self.convT0(x), x1))
-        #         x = self.conv8(self.concat(self.convT0(x), x0))
-        #         return self.outconv(x)
         # contracting path
-        x0 = C.checkpoint(self.conv0, x)
-        # print(x0.size())
-        x1 = C.checkpoint(self.conv1, C.checkpoint(self.maxpool, x0))
-        # print(x1.size())
-        x2 = C.checkpoint(self.conv2, C.checkpoint(self.maxpool, x1))
-        # print(x2.size())
-        x3 = C.checkpoint(self.conv3, C.checkpoint(self.maxpool, x2))
-        # print(x3.size())
-        x = C.checkpoint(self.conv4, C.checkpoint(self.maxpool, x3))
-        # print(x.size())
+        x0 = self.conv0(x)
+        x1 = self.conv1(self.maxpool(x0))
+        x2 = self.conv2(self.maxpool(x1))
+        x3 = self.conv3(self.maxpool(x2))
+        x = self.conv4(self.maxpool(x3))
         # expanding path
-        x = C.checkpoint(self.conv5, self.concat(C.checkpoint(self.convT0, x), x3))
-        # print(x.size())
-        x = C.checkpoint(self.conv6, self.concat(C.checkpoint(self.convT1, x), x2))
-        # print(x.size())
-        x = C.checkpoint(self.conv7, self.concat(C.checkpoint(self.convT2, x), x1))
-        # print(x.size())
-        x = C.checkpoint(self.conv8, self.concat(C.checkpoint(self.convT3, x), x0))
-        # print(x.size())
-        return C.checkpoint(self.outconv, x)
+        x = self.conv5(self.concat(self.convT0(x), x3))
+        x = self.conv6(self.concat(self.convT1(x), x2))
+        x = self.conv7(self.concat(self.convT0(x), x1))
+        x = self.conv8(self.concat(self.convT0(x), x0))
+        return self.outconv(x)
+#         # contracting path
+#         x0 = C.checkpoint(self.conv0, x)
+#         x1 = C.checkpoint(self.conv1, C.checkpoint(self.maxpool, x0))
+#         x2 = C.checkpoint(self.conv2, C.checkpoint(self.maxpool, x1))
+#         x3 = C.checkpoint(self.conv3, C.checkpoint(self.maxpool, x2))
+#         x = C.checkpoint(self.conv4, C.checkpoint(self.maxpool, x3))
+#         # expanding path
+#         x = C.checkpoint(self.conv5, self.concat(C.checkpoint(self.convT0, x), x3))
+#         x = C.checkpoint(self.conv6, self.concat(C.checkpoint(self.convT1, x), x2))
+#         x = C.checkpoint(self.conv7, self.concat(C.checkpoint(self.convT2, x), x1))
+#         x = C.checkpoint(self.conv8, self.concat(C.checkpoint(self.convT3, x), x0))
+#         return C.checkpoint(self.outconv, x)
 
     @staticmethod
     def concat(x_e, x_c):
