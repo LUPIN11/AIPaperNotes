@@ -2,6 +2,8 @@
 
 [U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)](#u-net-convolutional-networks-for-biomedical-image-segmentation2023520)
 
+[Momentum Contrast for Unsupervised Visual Representation Learning(2023/5/27)](#momentum-contrast-for-unsupervised-visual-representation-learning2023527)
+
 ## U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)
 
 Paper Download Link:
@@ -65,7 +67,67 @@ Main Ideas:
 Due to the challenge of separating touching objects of the same class, a weighted loss is used to force the network to learn the small separation borders.  
 
 
+## Momentum Contrast for Unsupervised Visual Representation Learning(2023/5/27)
 
+### Overview
+
+This paper presents MoCo, a contrastive unsupervised representation learning mechanism.
+
+MoCo can achieve comparable or even better performance compared to its supervised pre-training counterpart and requires significantly lower GPU memory.
+
+Key Points:
+
++ View contrastive learning as dictionary look-up
++ Maintain the dictionary of encoded representations as a queue of mini-batches
++ A moving-averaged key encoder
+
+### Previous Bottleneck
+
+Dictionary building may be the key to the success of unsupervised representation learning in CV:
+
++ Unsupervised learning in NLP is highly sucessful and it's partly based on tokenized dictionaries.
++ In contrast, building a dictionary is more challenging in CV because the raw signal is:
+  + continuous  
+  + high-dimensional  
+  + not structured for human communication
+
+Contrastive unsupervised learning can be viewed as building dynamic dictionaries: 
+
+An encoded query should be similar to its matching key (the positive sample) and dissimilar to others (negative samples).  
+
+However, dictionaries built by previous mechanisms are limited in one of these two aspects:
+
++ Large
+
+  A larger dictionary may better sample the underlying visual space.
+
++ Consistent
+
+  Keys in the dictionary should be represented by the same or similar encoder so that their comparisons to the query are consistent.
+  
+  <img src=".\images\image-20230527171548381.png" alt="image-20230527171548381" style="zoom: 80%;" />
+
+### Implement
+
++ Maintain the dictionary as a queue 
+
+  The encoded representations of the current mini-batch are enqueued, and the oldest are dequeued.
+
++ The key encoder is a momentum-based moving average of the query encoder
+
+  <img src=".\images\20230527202252.png" alt="20230527202252" style="zoom: 80%;" />
+
+Why Consistent:
+
+​	Though encoders varies across each mini-batch, the difference can be made small by using a large momentum (0.999).
+
+Why Large:
+
+​	Though large, the dictionary is consistent.
+
+​	Though large, the dictionary needn't to be stored on the GPU as the query encoder doesn't require gradient. 
+
+Therefore, the momentum strategy is the core of MoCo.
 
 
 
