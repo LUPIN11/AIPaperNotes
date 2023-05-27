@@ -73,7 +73,7 @@ Due to the challenge of separating touching objects of the same class, a weighte
 
 This paper presents MoCo, a contrastive unsupervised representation learning mechanism.
 
-MoCo can achieve comparable or even better performance compared to its supervised pre-training counterpart and requires significantly lower GPU memory.
+MoCo can achieve comparable or even better performance compared to its supervised pre-training counterpart and requires lower GPU memory.
 
 Key Points:
 
