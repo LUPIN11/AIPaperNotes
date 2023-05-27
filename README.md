@@ -119,13 +119,13 @@ However, dictionaries built by previous mechanisms are limited in one of these t
 
 Why Consistent:
 
-​	Though encoders varies across each mini-batch, the difference can be made small by using a large momentum (0.999).
+Though encoders varies across each mini-batch, the difference can be made small by using a large momentum (0.999).
 
 Why Large:
 
-​	Though large, the dictionary is consistent.
+Though large, the dictionary is consistent.
 
-​	Though large, the dictionary needn't to be stored on the GPU as the query encoder doesn't require gradient. 
+Though large, the dictionary needn't to be stored on the GPU as the query encoder doesn't require gradient. 
 
 Therefore, the momentum strategy is the core of MoCo.
 
