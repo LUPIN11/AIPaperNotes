@@ -115,7 +115,7 @@ However, dictionaries built by previous mechanisms are limited in one of these t
 
 + The key encoder is a momentum-based moving average of the query encoder
 
-  <img src=".\images\20230527202252.png" alt="20230527202252" style="zoom: 80%;" />
+  <img src=".\images\image-20230527202252.png" alt="20230527202252" style="zoom: 80%;" />
 
 Why Consistent:
 
