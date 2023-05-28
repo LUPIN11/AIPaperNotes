@@ -117,7 +117,7 @@ However, dictionaries built by previous mechanisms are limited in one of these t
 
   Only the query encoder is updated by BP.
 
-  <img src=".\images\image-20230527202252.png" alt="20230527202252" style="zoom: 80%;" />
+  <img src=".\images\image-20230527202252.png" alt="image-20230527202252" style="zoom: 80%;" />
 
 Why Consistent:
 
@@ -131,9 +131,7 @@ Though large, the dictionary needn't to be stored on the GPU as the query encode
 
 Therefore, the momentum strategy is the core of MoCo.
 
-
-
-
+  <img src=".\images\image-20230528091624.png" alt="image-20230528091624" style="zoom: 80%;" />
 
 
 
