@@ -20,7 +20,7 @@ Key Points:
 
 ### Network Architecture
 
-<img src=".\images\image-20230520145130450.png" alt="image-20230520145130450" style="zoom:67%;" />
+<img src=".\images\image-20230520145130450.png" alt="image-20230520145130450" style="zoom:100%;" />
 
 
 
@@ -44,7 +44,7 @@ Main Ideas:
 
 ### Data Augmentation
 
-<img src=".\images\image-20230520171749916.png" alt="image-20230520171749916" style="zoom:50%;" />
+<img src=".\images\image-20230520171749916.png" alt="image-20230520171749916" style="zoom:100%;" />
 
 + Overlap-tile Strategy
 
@@ -60,7 +60,7 @@ Main Ideas:
 
 ### Loss Fuction
 
-<img src=".\images\image-20230520174104573.png" alt="image-20230520174104573" style="zoom:67%;" />
+<img src=".\images\image-20230520174104573.png" alt="image-20230520174104573" style="zoom:100%;" />
 
 Due to the challenge of separating touching objects of the same class, a weighted loss is used to force the network to learn the small separation borders.  
 
@@ -103,7 +103,7 @@ However, dictionaries built by previous mechanisms are limited in one of these t
 
   Keys in the dictionary should be represented by the same or similar encoder so that their comparisons to the query are consistent.
   
-  <img src=".\images\image-20230527171548381.png" alt="image-20230527171548381" style="zoom: 80%;" />
+  <img src=".\images\image-20230527171548381.png" alt="image-20230527171548381" style="zoom: 100%;" />
 
 ### Implement
 
@@ -115,7 +115,7 @@ However, dictionaries built by previous mechanisms are limited in one of these t
 
   Only the query encoder is updated by BP.
 
-  <img src=".\images\image-20230527202252.png" alt="image-20230527202252" style="zoom: 80%;" />
+  <img src=".\images\image-20230527202252.png" alt="image-20230527202252" style="zoom: 100%;" />
 
 Why Consistent:
 
@@ -129,7 +129,7 @@ Though large, the dictionary needn't to be stored on the GPU as the query encode
 
 Therefore, the momentum strategy is the core of MoCo.
 
-  <img src=".\images\image-20230528091624.png" alt="image-20230528091624" style="zoom: 80%;" />
+  <img src=".\images\image-20230528091624.png" alt="image-20230528091624" style="zoom: 100%;" />
 
 
 ## SEMANTIC IMAGE SEGMENTATION WITH DEEP CONVOLUTIONAL NETS AND FULLY CONNECTED CRFS(2023/6/3)
@@ -155,7 +155,7 @@ Meanwile, repeatedly signal downsampling, including max-pooling and striding, re
 This paper tries to address the invariance problem using CRF and the downsampling problem using atrous convolution.
 
 ### Implement
-![20230603141152](.\images\20230603141152.png)
+<img src=".\images\20230603141152.png" alt="20230603141152" style="zoom:100%;" />
 
 The first step is to obtain the dense score maps output by a DCNN. For efficiency, network re-purposing is employed on a pre-trained model (VGG16).  Then, thanks to the smoothness of the score maps, their resolution can be restored by simple bilinear interpolation.
 
@@ -173,12 +173,12 @@ Note that atrous convolution plays an indispensable role in this step.
 
   Otherwise, learning upsampling layers would significantly increase the complexity and training time.
 
-  ![20230603152340](.\images\20230603152340.png)
+  <img src=".\images\20230603152340.png" alt="20230603152340" style="zoom:100%;" />
 
 Last, couple the recognition capacity of DCNNs and the fine-grained localization accuracy of fully connected CRFs.
 
 
-![20230603141325](.\images\20230603141325.png)
+  <img src=".\images\20230603141325.png" alt="20230603141325" style="zoom:100%;" />
 
 
 
