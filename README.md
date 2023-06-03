@@ -6,10 +6,6 @@
 
 ## U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)
 
-Paper Download Link:
-
-> https://arxiv.org/abs/1505.04597
-
 ### Overview
 
 This paper presents a new network architecture, U-Net, of fully convolutional network(FCN) and its training strategy to solve a pixel-level classification task with very few annotated images.
