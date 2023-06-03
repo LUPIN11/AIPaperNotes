@@ -4,6 +4,8 @@
 
 [Momentum Contrast for Unsupervised Visual Representation Learning(2023/5/27)](#momentum-contrast-for-unsupervised-visual-representation-learning2023527)
 
+[SEMANTIC IMAGE SEGMENTATION WITH DEEP CONVOLUTIONAL NETS AND FULLY CONNECTED CRFS(2023/6/3)](#semantic-image-segmentation-with-deep-convolutional-nets-and-fully-connected-crfs202363)
+
 ## U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)
 
 ### Overview
@@ -129,6 +131,54 @@ Therefore, the momentum strategy is the core of MoCo.
 
   <img src=".\images\image-20230528091624.png" alt="image-20230528091624" style="zoom: 80%;" />
 
+
+## SEMANTIC IMAGE SEGMENTATION WITH DEEP CONVOLUTIONAL NETS AND FULLY CONNECTED CRFS(2023/6/3)
+
+### Overview
+
+This paper proposes a fully connected CRF layer at the end of DCNNs to better localize segment boundaries.
+
+Key Points:
+
++ Atrous convolution and network re-purposing
++ Fully connected CRF for accurate localization
+
+### Previous Bottleneck
+
++ spatial invariance
++ signal downsampling
+
+The success of DCNNs can be partially attributed to its build-in invariance to local image transformations, which enables them to learn more abstract representations. While this invariance is desirable for high-level vision tasks, it can hamper low-level tasks because of the lack of precise localization. 
+
+Meanwile, repeatedly signal downsampling, including max-pooling and striding, results in a decrease in resolution. These two problems are the main hurdles in applying DCNNs to dense image labeling.
+
+This paper tries to address the invariance problem using CRF and the downsampling problem using atrous convolution.
+
+### Implement
+![20230603141152](.\images\20230603141152.png)
+
+The first step is to obtain the dense score maps output by a DCNN. For efficiency, network re-purposing is employed on a pre-trained model (VGG16).  Then, thanks to the smoothness of the score maps, their resolution can be restored by simple bilinear interpolation.
+
+Note that atrous convolution plays an indispensable role in this step.
+
++ Efficient computing
+
+  With the same number of parameters and computational cost, atrous convolution provides a larger receptive field.
+
++ Better downsampling
+
+  It allows arbitrary downsampling rates without introducing any approximations.
+
++ Smooth score maps
+
+  Otherwise, learning upsampling layers would significantly increase the complexity and training time.
+
+  ![20230603152340](.\images\20230603152340.png)
+
+Last, couple the recognition capacity of DCNNs and the fine-grained localization accuracy of fully connected CRFs.
+
+
+![20230603141325](.\images\20230603141325.png)
 
 
 
