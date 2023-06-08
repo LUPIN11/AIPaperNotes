@@ -182,6 +182,8 @@ Last, couple the recognition capacity of DCNNs and the fine-grained localization
 #### Fully Connected CRFs
 Note that there exists a dependency between any two pixels in the fully connected CRF layer.
 
+The energy function of the fully connected CRF layer is:
+
 $$
 E(x) = \sum_{i}\theta_i(x_i) + \sum_{ij}\theta_{ij}(x_i, x_j)
 $$
@@ -194,13 +196,15 @@ $$
 \theta_{ij}=\mu(x_i, x_j)\sum_{m=1}^{K}\omega_m\cdot{k^m(f_i,f_j)}
 $$
 
-$E(x)$ is the energy function, $i,j$  stand for pixel $i$ and pixel $j$, $P(x_i)$ is the label assignment probability computed by the DCNN at pixel $i$, $\mu(x_i, x_j)=1$ if $x_i \not= x_j$, and 0 otherwise, $f_i$ stands for features extracted for pixel $i$ and $k^m$ is a Gaussian kernel. 
+where $i,j$  stand for pixel $i$ and pixel $j$, $P(x_i)$ is the label assignment probability computed by the DCNN at pixel $i$, $\mu(x_i, x_j)=1$ if $x_i \not= x_j$, and 0 otherwise, $f_i$ stands for features extracted for pixel $i$ and $k^m$ is a Gaussian kernel. 
+
+The kernels are:
 
 $$
 \omega_1\cdot{exp(-\frac{||p_i-p_j||^2}{2\sigma_\alpha^2}-\frac{||I_i-I_j||^2}{2\sigma_\beta^2}) +\omega_2\cdot{exp(-\frac{||p_i-p_j||^2}{2\sigma_\gamma^2})}}
 $$
 
-$p$ stands for pixel position and $I$ stands for pixel color intensity. 
+where $p$ stands for pixel position and $I$ stands for pixel color intensity. 
 
 
 
