@@ -6,6 +6,8 @@
 
 [SEMANTIC IMAGE SEGMENTATION WITH DEEP CONVOLUTIONAL NETS AND FULLY CONNECTED CRFS(2023/6/3)](#semantic-image-segmentation-with-deep-convolutional-nets-and-fully-connected-crfs202363)
 
+[AN IMAGE IS WORTH 16X16 WORDS: TRANSFORMERS FOR IMAGE RECOGNITION AT SCALE(2023/6/9)](#an-image-is-worth-16x16-words:-transformers-for-image-recognition-at-scale202369)
+
 ## U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)
 
 ### Overview
@@ -205,6 +207,34 @@ $$
 $$
 
 where $p$ stands for pixel position and $I$ stands for pixel color intensity. 
+
+
+## AN IMAGE IS WORTH 16X16 WORDS: TRANSFORMERS FOR IMAGE RECOGNITION AT SCALE(2023/6/9)  
+### Overview
+
+This paper shows that vision transformer(ViT) outperforms CNNs on many downstream tasks when pre-trained on large amounts of data.  Note that there are many insightful experiments in this paper.
+
+### Implement
+
+![20230609194323](D:\Desktop\images\20230609194323.png)
+
++ Reshape image $x \in \mathbb{R}^{H \times W \times C}$ into $x_p \in \mathbb{R}^{N \times (P^2\cdot C)}$, where $(P,P)$ is the resolution of each image patch.
+
+  In other words, each patch ($\mathbb{R}^{P \times P \times C}$) is flattened.
+
++ Map these flattened patches to $D$ dimensions with a trainable linear projection.
+
+  The output of this projection are patch embeddings.
+
++ $z^0_{0}$ is a learnable embedding and the corresponding output, $z_L^{0}$, is the image representation $y$ produced by Transformer Encoder.
+
++ Use standard learnable 1D position embeddings since there are no significant performance gains when using more advanced 2D-aware position embeddings.
+
+### Conclusions
+
++ It become possible to train models of unprecedented size (e.g. 100B) thanks to the efficiency and scalability of Transformers. And there is still no sign of saturating performance.
++ Since Transformers has much less image-specific inductive bias than CNNs, it do not generalize well when trained on insufficient amounts of data. But large scale training trumps inductive bias.
++ It is ofen beneficial to fine-tune at higher resolution than pre-training since a higher resolution results in a larger effective sequence length.
 
 
 
