@@ -218,16 +218,9 @@ This paper shows that vision transformer(ViT) outperforms CNNs on many downstrea
 
 <img src=".\images\20230609194323.png" alt="20230609194323" style="zoom:100%;" />
 
-+ Reshape image $x \in \mathbb{R}^{H \times W \times C}$ into $x_p \in \mathbb{R}^{N \times (P^2\cdot C)}$, where $(P,P)$ is the resolution of each image patch.
-
-  In other words, each patch ($\mathbb{R}^{P \times P \times C}$) is flattened.
-
-+ Map these flattened patches to $D$ dimensions with a trainable linear projection.
-
-  The output of this projection are patch embeddings.
-
++ Reshape image $x \in \mathbb{R}^{H \times W \times C}$ into $x_p \in \mathbb{R}^{N \times (P^2\cdot C)}$, where $(P,P)$ is the resolution of each image patch. In other words, each patch ($\mathbb{R}^{P \times P \times C}$) is flattened.
++ Map these flattened patches to $D$ dimensions with a trainable linear projection. The output of this projection are patch embeddings.
 + $z^0_{0}$ is a learnable embedding and the corresponding output, $z_L^{0}$, is the image representation $y$ produced by Transformer Encoder.
-
 + Use standard learnable 1D position embeddings since there are no significant performance gains when using more advanced 2D-aware position embeddings.
 
 ### Conclusions
