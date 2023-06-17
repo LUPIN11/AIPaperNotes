@@ -216,7 +216,7 @@ This paper shows that vision transformer(ViT) outperforms CNNs on many downstrea
 
 ### Implement
 
-![20230609194323](D:\Desktop\images\20230609194323.png)
+<img src=".\images\20230609194323.png" alt="20230609194323" style="zoom:100%;" />
 
 + Reshape image $x \in \mathbb{R}^{H \times W \times C}$ into $x_p \in \mathbb{R}^{N \times (P^2\cdot C)}$, where $(P,P)$ is the resolution of each image patch.
 
