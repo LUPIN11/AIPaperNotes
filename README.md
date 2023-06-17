@@ -212,7 +212,8 @@ where $p$ stands for pixel position and $I$ stands for pixel color intensity.
 ## AN IMAGE IS WORTH 16X16 WORDS: TRANSFORMERS FOR IMAGE RECOGNITION AT SCALE(2023/6/9)  
 ### Overview
 
-This paper shows that vision transformer(ViT) outperforms CNNs on many downstream tasks when pre-trained on large amounts of data.  Note that there are many insightful experiments in this paper.
+This paper shows that vision transformer(ViT) outperforms CNNs on many downstream tasks when pre-trained on large amounts of data.  
+Note that there are many insightful experiments in this paper.
 
 ### Implement
 
