@@ -242,9 +242,9 @@ Key Points:
 
 ### Motivation
 
-![20230617232934](D:\Desktop\images\20230617232934.png)
+<img src=".\images\20230617232934.png" alt="20230617232934" style="zoom:100%;" />
 
-![20230618100821](./20230618100821.png)
+<img src=".\images\20230618100821.png" alt="20230618100821" style="zoom:100%;" />
 
 Previous methods always scale up CNNs by one of the dimensions of depth/width/resolution. However, a compound scaling method is more intuitively reasonable:
 
@@ -268,13 +268,13 @@ However,  it requires tedious manual tuning and often yields sub-optimal accurac
 
   + Problem Formulation
   
-    A CNN is defined as $\mathcal{N}=\bigodot_{i=1 \ldots s} \mathcal{F}_i^{L_i}\left(X_{\left\langle H_i, W_i, C_i\right\rangle}\right)$, where $\mathcal{F}_i^{L_i}$ denotes layer $F_i$ is repeated $L_i$ times in stage $i$, $\left\langle H_i, W_i, C_i\right\rangle$ denotes the shape of input tensor $X$ of layer $i$.
+    A CNN is defined as $`\mathcal{N}=\bigodot_{i=1 \ldots s} \mathcal{F}_i^{L_i}\left(X_{\left\langle H_i, W_i, C_i\right\rangle}\right)`$, where $\mathcal{F}_i^{L_i}$ denotes layer $F_i$ is repeated $L_i$ times in stage $i$, $\left\langle H_i, W_i, C_i\right\rangle$ denotes the shape of input tensor $X$ of layer $i$.
   
     While regular CNN designs mostly focus on finding the best layer architecture $\mathcal{F}_i$, model scaling tries to expand the network length $\left(L_i\right)$, width $\left(C_i\right)$, and/or resolution $\left(H_i, W_i\right)$ without changing $\mathcal{F}_i$ predefined in the baseline network. 
   
     Not only all dimensions, but also all layers must be scaled uniformly in order to reduce the design space. Thus, the target is:
 
-    ![20230618134239](./20230618134239.png)
+    <img src=".\images\20230618134239.png" alt="20230618134239" style="zoom:100%;" />
 
     where $w, d, r$ are coefficients for scaling network width, depth, and resolution; $\hat{\mathcal{F}}_i, \hat{L}_i, \hat{H}_i, \hat{W}_i, \hat{C}_i$ are predefined parameters in baseline network.
   
@@ -282,7 +282,7 @@ However,  it requires tedious manual tuning and often yields sub-optimal accurac
   
     This paper proposes a new compound scaling method that uses a compound coefficient $\phi$ to uniformly scales network width, depth, and resolution in a principled way:
 
-    ![20230618134256](./20230618134256.png)
+    <img src=".\images\20230618134256.png" alt="20230618134256" style="zoom:100%;" />
   
     where $\alpha, \beta, \gamma$ are constants that can be determined by grid search and $\phi$ is a user-specified coefficient that controls how many more resources are available for model scaling.
   
