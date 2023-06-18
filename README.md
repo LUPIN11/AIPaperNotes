@@ -10,6 +10,8 @@
 
 [EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks(2023/6/13)](#efficientnet-rethinking-model-scaling-for-convolutional-neural-networks2023613)
 
+[Pseudo-Label : The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks(2023/6/18)](#pseudo-label-the-simple-and-efficient-semi-supervised-learning-method-for-deep-neural-networks2023618)
+
 ## U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)
 
 ### Overview
@@ -307,6 +309,43 @@ However,  it requires tedious manual tuning and often yields sub-optimal accurac
   
     Note that $\alpha, \beta, \gamma$ are fixed across subsequent models instead of being re-searched for every model to avoid the extremely expensive cost.
 
+## Pseudo-Label: The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks(2023/6/18)
+### Overview 
+
+This paper proposes a method of semi-supervised learning, called Pseudo-Label. The network is trained in a supervised fashion with labeled samples and unlabled samples that treat pseudo-labels as true labels.
+
+### Implement
+
+Like all of recent successful methods for training deep neural networks, there are two phrase of training: unsupervised pre-training and fine-tuning. Pseudo-Labels are used in the second phrase. The pre-trained network is trained in a supervised fashion with labeled and unlabeled data simultaneously. 
+
+Pseudo-Labels are the classes that have maximum predicted probabilities for each unlabeled sample and they will be treated as if they were true labels. Note that pseudo-labels are re-calculated every weights update. The overall loss fuction is: 
+
+```math
+L=\frac{1}{n} \sum_{m=1}^n \sum_{i=1}^C L\left(y_i^m, f_i^m\right)+\alpha(t) \frac{1}{n^{\prime}} \sum_{m=1}^{n^{\prime}} \sum_{i=1}^C L\left(y_i^{\prime m}, f_i^{\prime m}\right)
+```
+
+where n is the number of labeled data in a mini-batch, $n^{'}$ for unlabeled data and $y^{'m}_i$ is the pseudo-label of unlabeled data. $\alpha(t)$ is a coefficient to balancing the loss of these two kinds of data. 
+
+The proper scheduling of $\alpha(t)$ is very important for the network performance.  If $`\alpha(t)`$ is too high, it disturbs training even for labeled data. Whereas if $`\alpha(t)`$ is too small, it prevents the benefit from unlabeled data. Furthermore, $\alpha(t)$ should be slowly increased. This can help the model to avoid poor local minima. Note that unlabeled data is not used for training during the first $`T_i`$ iterations.
+```math
+\alpha(t)= \begin{cases}0 & t<T_1 \\ \frac{t-T_1}{T_2-T_1} \alpha_f & T_1 \leq t<T_2 \\ \alpha_f & T_2 \leq t\end{cases}
+```
+
+### Explanation
+
+The second term of the loss fuction is equivalent to minimizing the conditional entropy of class probabilities for unlabeled data.
+```math
+H\left(y \mid x^{\prime}\right)=-\frac{1}{n^{\prime}} \sum_{m=1}^{n^{\prime}} \sum_{i=1}^C P\left(y_i^m=1 \mid x^{\prime m}\right) \log P\left(y_i^m=1 \mid x^{\prime m}\right)
+```
+This entropy is a measure of class overlap. As class overlap decreases, the density of data points get lower at the decision boundary.  And according to the cluster assumption, the decision boundary should lie in low-density regions to improve generalization performance. Thus, pseudo-labels help the model to get better generalization performance.
+
+<img src=".\images\20230619025252.png" alt="20230619025252" style="zoom: 67%;" />
+
+### Experiments
+
+<img src=".\images\20230619025357.png" alt="20230619025357" style="zoom: 67%;" />
+
+Note that using Denoising Auto-Encoder when pre-training boosts up the performance.  
 
 
 
