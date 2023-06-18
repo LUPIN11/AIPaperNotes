@@ -10,7 +10,7 @@
 
 [EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks(2023/6/13)](#efficientnet-rethinking-model-scaling-for-convolutional-neural-networks2023613)
 
-[Pseudo-Label : The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks(2023/6/18)](#pseudo-label-the-simple-and-efficient-semi-supervised-learning-method-for-deep-neural-networks2023618)
+[Pseudo-Label: The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks(2023/6/18)](#pseudo-label-the-simple-and-efficient-semi-supervised-learning-method-for-deep-neural-networks2023618)
 
 ## U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)
 
