@@ -1,4 +1,4 @@
-[note](http://htmlpreview.github.io/)
+[note](http://htmlpreview.github.com/?)
 # WeeklyAIPaperNotes
 
 [U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)](#u-net-convolutional-networks-for-biomedical-image-segmentation2023520)
