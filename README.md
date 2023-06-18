@@ -1,5 +1,3 @@
-<a href="notes/EfficientNet Rethinking Model Scaling for Convolutional Neural Networks(2023613).html">链接文本</a>
-
 # WeeklyAIPaperNotes
 
 [U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)](#u-net-convolutional-networks-for-biomedical-image-segmentation2023520)
@@ -231,87 +229,6 @@ Note that there are many insightful experiments in this paper.
 + It become possible to train models of unprecedented size (e.g. 100B) thanks to the efficiency and scalability of Transformers. And there is still no sign of saturating performance.
 + Since Transformers has much less image-specific inductive bias than CNNs, it do not generalize well when trained on insufficient amounts of data. But large scale training trumps inductive bias.
 + It is ofen beneficial to fine-tune at higher resolution than pre-training since a higher resolution results in a larger effective sequence length.
-
-## EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks(2023/6/13)
-
-This paper proposes a new method to scale up CNNs to achieve better performance. The method uniformly scales up all dimensions of depth/width/resolution using a compound coefficient. Furthermore, they design a new baseline network using neutral achitecture search and scale it up to obtain a family of models, called EfficientNets.
-
-Key Points:
-
-+ A highly effective method to scale up CNNs
-+ A new family of models, called EfficientNets
-
-### Motivation
-
-![20230617232934](D:\Desktop\images\20230617232934.png)
-
-![20230618100821](./20230618100821.png)
-
-Previous methods always scale up CNNs by one of the dimensions of depth/width/resolution. However, a compound scaling method is more intuitively reasonable:
-
-The network need more layers to increase the receptive field and more channels to capture more fine-grained patterns if the input image is bigger.
-
-However,  it requires tedious manual tuning and often yields sub-optimal accuracy and efficiency when scaling 2 or 3 dimensions arbitrarily. Thus, they try to find a principled method to scale up CNNs that can achieve better accuracy and efficiency.
-
-### Method
-
-+ Develop EfficientNet-B0
-
-  Although higher accuracy is critical, we have already hit the hardware memory limit, and thus further accuracy gain needs better efficiency. Notably, the effectiveness of model scaling heavily depends on the baseline network. Considering that deep CNNs are often over-parameterized, they use a method of model compression, called neural architecture search to design a new baseline network (EfficientNet-B0).
-
-  Neural architecture search is a popular method in designing efficient mobile-size CNNs and achieves even better efficiency than hand-crafted mobile CNNs by extensively tuning the network width, depth, convolution kernel types and sizes. However, applying this approach for large models is a huge challenge because of extremely expensive tuning cost.
-
-  EfficientNet-B0 is scaled up to obtain a family of models, called EfficientNets. EfficientNets significantly outperform other CNNs.
-
-![20230618001636](D:\Desktop\images\20230618001636.png)
-
-+ Model Scaling
-
-  + Problem Formulation
-  
-    A CNN is defined as $$\mathcal{N}=\bigodot_{i=1 \ldots s} \mathcal{F}_i^{L_i}\left(X_{\left\langle H_i, W_i, C_i\right\rangle}\right)$$, where $\mathcal{F}_i^{L_i}$ denotes layer $F_i$ is repeated $L_i$ times in stage $i$, $\left\langle H_i, W_i, C_i\right\rangle$ denotes the shape of input tensor $X$ of layer $i$.
-  
-    While regular CNN designs mostly focus on finding the best layer architecture $\mathcal{F}_i$, model scaling tries to expand the network length $\left(L_i\right)$, width $\left(C_i\right)$, and/or resolution $\left(H_i, W_i\right)$ without changing $\mathcal{F}_i$ predefined in the baseline network. 
-  
-    Not only all dimensions, but also all layers must be scaled uniformly in order to reduce the design space. Thus, the target is:
-    $$
-    \begin{aligned}
-    \max_{d, w, r} & \text{Accuracy}(\mathcal{N}(d, w, r)) \\
-    \text{s.t.} & \mathcal{N}(d, w, r) = \bigodot_{i=1}^{s} \hat{\mathcal{F}}_i^{d \cdot \hat{L}_i}\left(X_{\left\langle r \cdot \hat{H}_i, r \cdot \hat{W}_i, w \cdot \hat{C}_i\right\rangle}\right) \\
-    & \text{Memory}(\mathcal{N}) \leq \text{target\_memory} \\
-    & \text{FLOPS}(\mathcal{N}) \leq \text{target\_flops}
-    \end{aligned}
-    $$
-    where $w, d, r$ are coefficients for scaling network width, depth, and resolution; $\hat{\mathcal{F}}_i, \hat{L}_i, \hat{H}_i, \hat{W}_i, \hat{C}_i$ are predefined parameters in baseline network.
-
-  + Compound Scaling Method
-  
-    This paper proposes a new compound scaling method that uses a compound coefficient $\phi$ to uniformly scales network width, depth, and resolution in a principled way:
-    $$
-    \begin{aligned}
-    & \text { depth: } d=\alpha^\phi \\
-    & \text { width: } w=\beta^\phi \\
-    & \text { resolution: } r=\gamma^\phi \\
-    & \text { s.t. } \alpha \cdot \beta^2 \cdot \gamma^2 \approx 2 \\
-    & \alpha \geq 1, \beta \geq 1, \gamma \geq 1
-    \end{aligned}
-    $$
-    where $\alpha, \beta, \gamma$ are constants that can be determined by grid search and $\phi$ is a user-specified coefficient that controls how many more resources are available for model scaling.
-
-  + Obtain EfficientNets
-
-    STEP 1
-
-    Fix $\phi=1$, assuming twice more resources available, and do a small grid search of $\alpha, \beta, \gamma$. In particular, they find the best values for EfficientNet-B0 are $\alpha=1.2, \beta=$ 1.1, $\gamma=1.15$, under constraint of $\alpha \cdot \beta^2 \cdot \gamma^2 \approx 2$.
-
-    STEP 2
-
-    Fix $\alpha, \beta, \gamma$ as constants and scale up baseline network with different $\phi$ to obtain EfficientNet-B1 to B7.
-      
-      
-  
-    Note that $\alpha, \beta, \gamma$ are fixed across subsequent models instead of being re-searched for every model to avoid the extremely expensive cost.
-
 
 
 
