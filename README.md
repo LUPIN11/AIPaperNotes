@@ -8,6 +8,8 @@
 
 [AN IMAGE IS WORTH 16X16 WORDS: TRANSFORMERS FOR IMAGE RECOGNITION AT SCALE(2023/6/9)](#an-image-is-worth-16x16-words-transformers-for-image-recognition-at-scale202369)
 
+[EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks(2023/6/13)](#efficientnet-rethinking-model-scaling-for-convolutional-neural-networks2023613)
+
 ## U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)
 
 ### Overview
@@ -264,28 +266,35 @@ However,  it requires tedious manual tuning and often yields sub-optimal accurac
 
 <img src=".\images\20230618001636.png" alt="20230618001636" style="zoom:100%;" />
 
-+ Model Scaling
 
-  + Problem Formulation
+ + Problem Formulation
   
     A CNN is defined as $`\mathcal{N}=\bigodot_{i=1 \ldots s} \mathcal{F}_i^{L_i}\left(X_{\left\langle H_i, W_i, C_i\right\rangle}\right)`$, where $\mathcal{F}_i^{L_i}$ denotes layer $F_i$ is repeated $L_i$ times in stage $i$, $\left\langle H_i, W_i, C_i\right\rangle$ denotes the shape of input tensor $X$ of layer $i$.
   
     While regular CNN designs mostly focus on finding the best layer architecture $\mathcal{F}_i$, model scaling tries to expand the network length $\left(L_i\right)$, width $\left(C_i\right)$, and/or resolution $\left(H_i, W_i\right)$ without changing $\mathcal{F}_i$ predefined in the baseline network. 
   
-    Not only all dimensions, but also all layers must be scaled uniformly in order to reduce the design space. Thus, the target is:
-
-    <img src=".\images\20230618134239.png" alt="20230618134239" style="zoom:100%;" />
-
-    where $w, d, r$ are coefficients for scaling network width, depth, and resolution; $\hat{\mathcal{F}}_i, \hat{L}_i, \hat{H}_i, \hat{W}_i, \hat{C}_i$ are predefined parameters in baseline network.
+    Not only all dimensions, but also all layers must be scaled uniformly in order to reduce the design space. Thus, the target is: [see formulas below], where $w, d, r$ are coefficients for scaling network width, depth, and resolution; $\hat{\mathcal{F}}_i, \hat{L}_i, \hat{H}_i, \hat{W}_i, \hat{C}_i$ are predefined parameters in baseline network.
+```math
+  \begin{aligned}
+  \max_{d, w, r} & \text{Accuracy}(\mathcal{N}(d, w, r)) \\
+  \text{s.t.} & \mathcal{N}(d, w, r) = \bigodot_{i=1}^{s} \hat{\mathcal{F}}_i^{d \cdot \hat{L}_i}\left(X_{\left\langle r \cdot \hat{H}_i, r \cdot \hat{W}_i, w \cdot \hat{C}_i\right\rangle}\right) \\
+  & \text{Memory}(\mathcal{N}) \leq \text{target\_memory} \\
+  & \text{FLOPS}(\mathcal{N}) \leq \text{target\_flops}
+  \end{aligned}
+```
   
   + Compound Scaling Method
   
-    This paper proposes a new compound scaling method that uses a compound coefficient $\phi$ to uniformly scales network width, depth, and resolution in a principled way:
-
-    <img src=".\images\20230618134256.png" alt="20230618134256" style="zoom:100%;" />
-  
-    where $\alpha, \beta, \gamma$ are constants that can be determined by grid search and $\phi$ is a user-specified coefficient that controls how many more resources are available for model scaling.
-  
+    This paper proposes a new compound scaling method that uses a compound coefficient $\phi$ to uniformly scales network width, depth, and resolution in a principled way: [see formulas below], where $\alpha, \beta, \gamma$ are constants that can be determined by grid search and $\phi$ is a user-specified coefficient that controls how many more resources are available for model scaling.
+```math
+  \begin{aligned}
+  & \text { depth: } d=\alpha^\phi \\
+  & \text { width: } w=\beta^\phi \\
+  & \text { resolution: } r=\gamma^\phi \\
+  & \text { s.t. } \alpha \cdot \beta^2 \cdot \gamma^2 \approx 2 \\
+  & \alpha \geq 1, \beta \geq 1, \gamma \geq 1
+  \end{aligned}
+``` 
   + Obtain EfficientNets
   
     - STEP 1
