@@ -326,10 +326,16 @@ L=\frac{1}{n} \sum_{m=1}^n \sum_{i=1}^C L\left(y_i^m, f_i^m\right)+\alpha(t) \fr
 
 where n is the number of labeled data in a mini-batch, $n^{'}$ for unlabeled data and $y^{'m}_i$ is the pseudo-label of unlabeled data. $\alpha(t)$ is a coefficient to balancing the loss of these two kinds of data. 
 
-The proper scheduling of $\alpha(t)$ is very important for the network performance.  If $`\alpha(t)`$ is too high, it disturbs training even for labeled data. Whereas if $`\alpha(t)`$ is too small, it prevents the benefit from unlabeled data. Furthermore, $\alpha(t)$ should be slowly increased. This can help the model to avoid poor local minima. Note that unlabeled data is not used for training during the first $`T_i`$ iterations.
-```math
-\alpha(t)= \begin{cases}0 & t<T_1 \\ \frac{t-T_1}{T_2-T_1} \alpha_f & T_1 \leq t<T_2 \\ \alpha_f & T_2 \leq t\end{cases}
-```
+The proper scheduling of $`\alpha(t)`$ is very important for the network performance.  If $`\alpha(t)`$ is too high, it disturbs training even for labeled data. Whereas if $`\alpha(t)`$ is too small, it prevents the benefit from unlabeled data. Furthermore, $`\alpha(t)`$ should be slowly increased. This can help the model to avoid poor local minima. Note that unlabeled data is not used for training during the first $`T_i`$ iterations.
+
+$$
+\alpha(t) = 
+\begin{cases}
+0 & \text{if } t < T_1 \\
+\frac{t - T_1}{T_2 - T_1} \alpha_f & \text{if } T_1 \leq t < T_2 \\
+\alpha_f & \text{if } T_2 \leq t \\
+\end{cases}
+$$
 
 ### Explanation
 
