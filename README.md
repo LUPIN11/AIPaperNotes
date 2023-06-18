@@ -1,4 +1,4 @@
-<a href="">链接文本</a>
+<a href="notes/EfficientNet Rethinking Model Scaling for Convolutional Neural Networks(2023613).html">链接文本</a>
 
 # WeeklyAIPaperNotes
 
