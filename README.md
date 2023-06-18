@@ -1,4 +1,4 @@
-[note](http://htmlpreview.github.com/?)
+[note](http://htmlpreview.github.com/?https://github.com/LUPIN11/WeeklyAIPaperNotes/blob/main/notes/EfficientNet%20Rethinking%20Model%20Scaling%20for%20Convolutional%20Neural%20Networks(2023613).html)
 # WeeklyAIPaperNotes
 
 [U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)](#u-net-convolutional-networks-for-biomedical-image-segmentation2023520)
