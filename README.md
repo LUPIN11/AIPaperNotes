@@ -12,7 +12,7 @@
 
 [Pseudo-Label: The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks(2023/6/18)](#pseudo-label-the-simple-and-efficient-semi-supervised-learning-method-for-deep-neural-networks2023618)
 
-[TEMPORAL ENSEMBLING FOR SEMI-SUPERVISED LEARNING(2023/6/20)](temporal-ensembling-for-semi-supervised-learning2023620)
+[TEMPORAL ENSEMBLING FOR SEMI-SUPERVISED LEARNING(2023/6/20)](#temporal-ensembling-for-semi-supervised-learning2023620)
 
 ## U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)
 
@@ -354,6 +354,7 @@ This entropy is a measure of class overlap. As class overlap decreases, the dens
 <img src=".\images\20230619025357.png" alt="20230619025357" style="zoom: 67%;" />
 
 Note that using Denoising Auto-Encoder when pre-training boosts up the performance.  
+
 
 ## TEMPORAL ENSEMBLING FOR SEMI-SUPERVISED LEARNING(2023/6/20)
 
