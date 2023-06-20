@@ -12,6 +12,8 @@
 
 [Pseudo-Label: The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks(2023/6/18)](#pseudo-label-the-simple-and-efficient-semi-supervised-learning-method-for-deep-neural-networks2023618)
 
+[TEMPORAL ENSEMBLING FOR SEMI-SUPERVISED LEARNING(2023/6/20)](temporal-ensembling-for-semi-supervised-learning2023620)
+
 ## U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)
 
 ### Overview
@@ -353,6 +355,45 @@ This entropy is a measure of class overlap. As class overlap decreases, the dens
 
 Note that using Denoising Auto-Encoder when pre-training boosts up the performance.  
 
+## TEMPORAL ENSEMBLING FOR SEMI-SUPERVISED LEARNING(2023/6/20)
 
+### Overview
+
+This paper proposes self-ensembling, a method that can also be utilized in a semi-supervised fashion.
+
+Key Points:
+
++ Self-ensembling: ensemble predictions of different epochs, regularization and augmentation contiditions
++ Semi-supervised learning: encourage these predictions, actually the entire output vectors, to be consistent.
+
+### Introduction
+
+A single network is trained in self-ensembling, but these emsembled predictions of different epochs and different regularization and augmentation conditions can be considered as predictions of a large number of individual sub-networks. The diversity among these sub-networks comes from:
+
++ Dropout: the complete network can be seen as an implicit ensemble of sub-networks
++ Augmentation:  the input augmentation are versatile and stochastic
++ The network parameters are updated every mini-batch
+
+Notice that dropout regularization and versatile input augmentation are very crucial.
+
+Compared with the current output, the ensemble predictions are likely to be closer to the correct but unknown labels of these unlabeled data, allowing for a better performance of semi-supervised learning.
+
+### Methods
+
+![20230620184935](D:\Desktop\images\20230620184935.png)
+
+Specifically, self-ensembling is achieved by calculating the weighted moving average of preditions and semi-supervised learning is achieved by minimizing the mean squared error between the entire output vectors, unlike Pseudo-Label.
+
+Specifically, self-ensembling is achieved through moving average, and self-supervision is implemented by minimizing the mean squared error of the outputs.
+
+![20230620202903](D:\Desktop\images\20230620202903.png)
+
+![20230620202914](D:\Desktop\images\20230620202914.png)
+
+The unsupervised loss term is scaled by a time-dependent weighting function $w(t)$, which ramps up from zero.  And it is very important that the ramp-up of the unsupervised loss term is slow enoungh-otherwise, the model gets easily stuck in a degenerate solution where no meaningful classification of the data is obtained.  
+
+Experiments show that temporal ensembling ahieves better performance than $\Pi$-model and it is nearly 2x faster (but it takes additional space to store the ensemble predictions, especially when the dataset and number of classes are pretty large).
+
+Notice that the training targets $\hat{z}$ are obtained by dividing $Z$ by $(1-\alpha^t)$. This step is known as bias correction, which is also employed in the Adam optimizer. The reason for bias correction is that the initial value of $Z$ is zero which leads to an underestimation of the value of $Z$. At the t-th step, the weight for the initial value of zero is $\alpha^t$. By removing this weight, we obtain a total weight of $(1-\alpha^t)$, which is used to scale the value of $Z$ to achieve bias correction.
 
 
