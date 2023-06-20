@@ -381,15 +381,15 @@ Compared with the current output, the ensemble predictions are likely to be clos
 
 ### Methods
 
-![20230620184935](D:\Desktop\images\20230620184935.png)
+<img src=".\images\20230620184935.png" alt="20230620184935" style="zoom:100%;" />
 
 Specifically, self-ensembling is achieved by calculating the weighted moving average of preditions and semi-supervised learning is achieved by minimizing the mean squared error between the entire output vectors, unlike Pseudo-Label.
 
 Specifically, self-ensembling is achieved through moving average, and self-supervision is implemented by minimizing the mean squared error of the outputs.
 
-![20230620202903](D:\Desktop\images\20230620202903.png)
+<img src=".\images\20230620202903.png" alt="20230620202903" style="zoom:100%;" />
 
-![20230620202914](D:\Desktop\images\20230620202914.png)
+<img src=".\images\20230620202914.png" alt="20230620202914" style="zoom:100%;" />
 
 The unsupervised loss term is scaled by a time-dependent weighting function $w(t)$, which ramps up from zero.  And it is very important that the ramp-up of the unsupervised loss term is slow enoungh-otherwise, the model gets easily stuck in a degenerate solution where no meaningful classification of the data is obtained.  
 
