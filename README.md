@@ -54,6 +54,8 @@ Main Ideas:
 
 <img src=".\images\image-20230520171749916.png" alt="image-20230520171749916" style="zoom:100%;" />
 
+Although the amount of data for medical image segmentation is very limited and U-Net has a large number of parameters owing to its larger number of channels, no regularization is mentioned in this paper (BN had not been introduced at that time). Thus, data augmentation is very crucial to avoid overfitting and achieve better generalization.
+
 + Overlap-tile Strategy
 
   To predict the pixels in the border region of the image, the missing context is extrapolated by mirroring the input image. 
@@ -71,6 +73,10 @@ Main Ideas:
 <img src=".\images\image-20230520174104573.png" alt="image-20230520174104573" style="zoom:100%;" />
 
 Due to the challenge of separating touching objects of the same class, a weighted loss is used to force the network to learn the small separation borders.  
+
+### Experiment Details
++ Post-processing: use the optimal threshold
++ The output map is averaged over maps of the original data and its 7 rotated versions.
 
 
 ## Momentum Contrast for Unsupervised Visual Representation Learning(2023/5/27)
