@@ -75,7 +75,7 @@ Although the amount of data for medical image segmentation is very limited and U
 Due to the challenge of separating touching objects of the same class, a weighted loss is used to force the network to learn the small separation borders.  
 
 ### Experiment Details
-+ Post-processing: use the optimal threshold.
++ Post-processing: Adjusting the threshold (a very common approach)
 + The output map is averaged over maps of the original data and its 7 rotated versions.
 
 
