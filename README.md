@@ -14,6 +14,8 @@
 
 [TEMPORAL ENSEMBLING FOR SEMI-SUPERVISED LEARNING(2023/6/20)](#temporal-ensembling-for-semi-supervised-learning2023620)
 
+[Focal Loss for Dense Object Detection(2023/6/28)](#focal-loss-for-dense-object-detection2023628)
+
 ## U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)
 
 ### Overview
@@ -403,4 +405,92 @@ Experiments show that temporal ensembling ahieves better performance than $\Pi$-
 
 Notice that the training targets $\hat{z}$ are obtained by dividing $Z$ by $(1-\alpha^t)$. This step is known as bias correction, which is also employed in the Adam optimizer. The reason for bias correction is that the initial value of $Z$ is zero which leads to an underestimation of the value of $Z$. At the t-th step, the weight for the initial value of zero is $\alpha^t$. By removing this weight, we obtain a total weight of $(1-\alpha^t)$, which is used to scale the value of $Z$ to achieve bias correction.
 
+## Focal Loss for Dense Object Detection(2023/6/28)
 
+### Overview
+
+This paper proposes a novel loss function, called Focal Loss, to address the class imbalance problem in the field of object detection, which hinders one-stage detectors from surpassing the accuracy of two-stage detectors.
+
+Key Points:
+
++ The lower accuracy of one-stage detectors compared to two-stage detectors can be attributed to the failure in addressing the class imbalance issue.
+
++ Add a scaling factor to the classical cross-entropy loss that automatically down-weights the contribution of easy examples, thereby enabling the model to focus more on hard examples.
+
++ Adjust the model initialization in the case of heavy class imbalance.
+
+### Previous Bottleneck
+
+#### Why one-stage dectects trail in terms of accuracy
+
+Though faster and simpler, the one-stage detectors have trailed the accuracy of two-stage detectors thus far. This paper shows that the extreme foreground-background class imbalance encountered during training of one-stage detectors is the central cause. 
+
+While class imbalance is addressed in two-stage detectors by cascade and ampling heuristics, one-stage detectors process a much larger set of candidate object locations regularly sampled across an image.  These detectors evaluate $`10^4`$~$`10^5`$ candidate locations per image but only a few locations contain objects. 
+
+#### Problems caused by class imbalance
+
+Among the overwhelming number of negative samples, most of them are very easy to be correctly classified. This leads to inefficient training and degenerated models because the gradient, thereby the training, is dominated by easy negatives that actually contribute no useful learning signal.
+
+#### Previous methods to address class imbalance
+
+Previous methods, such as hard negative mining or more complex sampling/reweighing schemes, are not efficient and effective enough.
+
+##### Balanced Cross Entropy
+
+$$
+CE(p_t)=-\alpha_tlog(p_t)
+$$
+
+In practice, $\alpha$ may be set by inverse class frequency or treated as a hyperparameter to set by cross validation. While $\alpha$ balances the importance of positive/negative examples, it does not differentiate between easy/hard examples.  As a result, easy negatives still comprise the majority of the loss.
+
+##### Huber Loss
+
+$$
+\text{HuberLoss}(y, \hat{y}) = \begin{cases} 
+\frac{1}{2}(y - \hat{y})^2, & \text{if } |y - \hat{y}| \leq \delta \\
+\delta(|y - \hat{y}| - \frac{1}{2}\delta), & \text{otherwise} 
+\end{cases}
+$$
+
+While inliers (easy examples) are down-weighted in focal loss, outliers (hard samples) are down-weighted in robust loss fuctions such as Huber loss.
+
+### Focal Loss
+
+<img src=".\images\20230628113819.png" alt="20230628113819" style="zoom:100%;" />
+
+$$
+FL(p_t) = -(1-p_t)^\gamma{log(p_t)}
+$$
+
+```math
+p_t = \left\{
+\begin{array}{ll}
+  p, & \text{if } y = 1 \\
+  1-p, & \text{otherwise, }
+\end{array}
+\right.
+```
+
+Note two properties of the focal loss:
+
++ When an example is misclassified and $p_t$ is small, the scaling factor is near 1 and the loss is unaffected. As $p_t→1$ the factor goes to 0 and the loss for well-classified examples is down-weighted.
++ The hyperparameter $\gamma$​ adjusts the rate at which easy examples are down-weighted. When $\gamma=0$, FL is equivalent to CE, and as $\gamma$ is increased the effect of the scaling factor is likewise increased.
+
+#### $\alpha$-balanced variant of the focal loss
+
+$$
+FL(p_t) = -\alpha_t(1-p_t)^\gamma{log(p_t)}
+$$
+
+### Model Initialization
+
+Binary classification models are by default initialized to have equal probability of outputting either $`y=-1`$ or $`1`$.  In the presence of  class imbalance, the loss due to the frequent class can dominate total loss and cause instability in early training.  
+
+In the final layer, set the bias initialization to $`b=-log((1-\pi)/\pi)`$,  where $`\pi`$ is the value of $`p`$ estimated by the model for the rare class (foreground) at the start of training. 
+
+### Experiments
+
++ $`\gamma=2`$ works best in their experiments.
+
++ $`\alpha`$-balanced variant of the focal loss is slightly better than the non-$`\alpha`$-balanced form.
++ The model initialization above improves training stability for both the cross entropy and focal loss in the case of heavy class imbalance
