@@ -1,22 +1,22 @@
 # WeeklyAIPaperNotes
 
-[U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)](#u-net-convolutional-networks-for-biomedical-image-segmentation2023520)
+[U-Net: Convolutional Networks for Biomedical Image Segmentation](#u-net-convolutional-networks-for-biomedical-image-segmentation)
 
-[Momentum Contrast for Unsupervised Visual Representation Learning(2023/5/27)](#momentum-contrast-for-unsupervised-visual-representation-learning2023527)
+[Momentum Contrast for Unsupervised Visual Representation Learning](#momentum-contrast-for-unsupervised-visual-representation-learning)
 
-[SEMANTIC IMAGE SEGMENTATION WITH DEEP CONVOLUTIONAL NETS AND FULLY CONNECTED CRFS(2023/6/3)](#semantic-image-segmentation-with-deep-convolutional-nets-and-fully-connected-crfs202363)
+[SEMANTIC IMAGE SEGMENTATION WITH DEEP CONVOLUTIONAL NETS AND FULLY CONNECTED CRFS](#semantic-image-segmentation-with-deep-convolutional-nets-and-fully-connected-crfs)
 
-[AN IMAGE IS WORTH 16X16 WORDS: TRANSFORMERS FOR IMAGE RECOGNITION AT SCALE(2023/6/9)](#an-image-is-worth-16x16-words-transformers-for-image-recognition-at-scale202369)
+[AN IMAGE IS WORTH 16X16 WORDS: TRANSFORMERS FOR IMAGE RECOGNITION AT SCALE](#an-image-is-worth-16x16-words-transformers-for-image-recognition-at-scale)
 
-[EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks(2023/6/13)](#efficientnet-rethinking-model-scaling-for-convolutional-neural-networks2023613)
+[EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks](#efficientnet-rethinking-model-scaling-for-convolutional-neural-networks)
 
-[Pseudo-Label: The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks(2023/6/18)](#pseudo-label-the-simple-and-efficient-semi-supervised-learning-method-for-deep-neural-networks2023618)
+[Pseudo-Label: The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks](#pseudo-label-the-simple-and-efficient-semi-supervised-learning-method-for-deep-neural-networks)
 
-[TEMPORAL ENSEMBLING FOR SEMI-SUPERVISED LEARNING(2023/6/20)](#temporal-ensembling-for-semi-supervised-learning2023620)
+[TEMPORAL ENSEMBLING FOR SEMI-SUPERVISED LEARNING](#temporal-ensembling-for-semi-supervised-learning)
 
-[Focal Loss for Dense Object Detection(2023/6/28)](#focal-loss-for-dense-object-detection2023628)
+[Focal Loss for Dense Object Detection](#focal-loss-for-dense-object-detection)
 
-## U-Net: Convolutional Networks for Biomedical Image Segmentation(2023/5/20)
+## U-Net: Convolutional Networks for Biomedical Image Segmentation
 
 ### Overview
 
@@ -81,7 +81,7 @@ Due to the challenge of separating touching objects of the same class, a weighte
 + The output map is averaged over maps of the original data and its 7 rotated versions.
 
 
-## Momentum Contrast for Unsupervised Visual Representation Learning(2023/5/27)
+## Momentum Contrast for Unsupervised Visual Representation Learning
 
 ### Overview
 
@@ -148,7 +148,7 @@ Therefore, the momentum strategy is the core of MoCo.
   <img src=".\images\image-20230528091624.png" alt="image-20230528091624" style="zoom: 100%;" />
 
 
-## SEMANTIC IMAGE SEGMENTATION WITH DEEP CONVOLUTIONAL NETS AND FULLY CONNECTED CRFS(2023/6/3)
+## SEMANTIC IMAGE SEGMENTATION WITH DEEP CONVOLUTIONAL NETS AND FULLY CONNECTED CRFS
 
 ### Overview
 
@@ -223,7 +223,7 @@ $$
 where $p$ stands for pixel position and $I$ stands for pixel color intensity. 
 
 
-## AN IMAGE IS WORTH 16X16 WORDS: TRANSFORMERS FOR IMAGE RECOGNITION AT SCALE(2023/6/9)  
+## AN IMAGE IS WORTH 16X16 WORDS: TRANSFORMERS FOR IMAGE RECOGNITION AT SCALE 
 ### Overview
 
 This paper shows that vision transformer(ViT) outperforms CNNs on many downstream tasks when pre-trained on large amounts of data.  
@@ -245,7 +245,7 @@ Note that there are many insightful experiments in this paper.
 + It is ofen beneficial to fine-tune at higher resolution than pre-training since a higher resolution results in a larger effective sequence length.
 
 
-## EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks(2023/6/13)
+## EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks
 
 This paper proposes a new method to scale up CNNs to achieve better performance. The method uniformly scales up all dimensions of depth/width/resolution using a compound coefficient. Furthermore, they design a new baseline network using neutral achitecture search and scale it up to obtain a family of models, called EfficientNets.
 
@@ -319,7 +319,7 @@ However,  it requires tedious manual tuning and often yields sub-optimal accurac
   
     Note that $\alpha, \beta, \gamma$ are fixed across subsequent models instead of being re-searched for every model to avoid the extremely expensive cost.
 
-## Pseudo-Label: The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks(2023/6/18)
+## Pseudo-Label: The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks
 ### Overview 
 
 This paper proposes a method of semi-supervised learning, called Pseudo-Label. The network is trained in a supervised fashion with labeled samples and unlabled samples that treat pseudo-labels as true labels.
@@ -364,7 +364,7 @@ This entropy is a measure of class overlap. As class overlap decreases, the dens
 Note that using Denoising Auto-Encoder when pre-training boosts up the performance.  
 
 
-## TEMPORAL ENSEMBLING FOR SEMI-SUPERVISED LEARNING(2023/6/20)
+## TEMPORAL ENSEMBLING FOR SEMI-SUPERVISED LEARNING
 
 ### Overview
 
@@ -405,7 +405,7 @@ Experiments show that temporal ensembling ahieves better performance than $\Pi$-
 
 Notice that the training targets $\hat{z}$ are obtained by dividing $Z$ by $(1-\alpha^t)$. This step is known as bias correction, which is also employed in the Adam optimizer. The reason for bias correction is that the initial value of $Z$ is zero which leads to an underestimation of the value of $Z$. At the t-th step, the weight for the initial value of zero is $\alpha^t$. By removing this weight, we obtain a total weight of $(1-\alpha^t)$, which is used to scale the value of $Z$ to achieve bias correction.
 
-## Focal Loss for Dense Object Detection(2023/6/28)
+## Focal Loss for Dense Object Detection
 
 ### Overview
 
